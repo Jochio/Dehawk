@@ -8,7 +8,6 @@
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
-    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "nodemon": "^1.18.9"
   },
@@ -18,7 +17,7 @@
     "eslint-plugin-import": "^2.14.0"
   },
   "scripts": {
-    "start": "nodemon --exec babel-node --server.js",
+    "start": "nodemon --exec babel-node -- server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

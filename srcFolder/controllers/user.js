@@ -2,28 +2,21 @@ import userModel from '../dummyData/userModel';
 
 class userControl {
   static userHandler(request, response) {
-    const {
-      name,
-      email,
-      phone,
-      address,
-      password
-    } = request.body;
-    const id = userModel.length;
-    const isUsers = {
-      id,
-      name,
-      email,
-      phone,
-      address,
-      password
+    const newUser = {
+      id: userModel.length,
+      firstName: request.body.firstName,
+      lastName: request.body.lastName,
+      email: request.body.email,
+      phone: request.body.phone,
+      address: request.body.address,
+      password: request.body.password,
     };
 
-    userModel.push(isUsers);
+    userModel.push(newUser);
     return response.status(201)
       .json({
-        message: `Welcome ${name}!`,
-        isUsers
+        message: `Welcome ${newUser.firstName}!`,
+        newUser
       });
   }
 }

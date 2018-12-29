@@ -1,6 +1,7 @@
 import express from 'express';
 // import bodyParser from 'body-parser';
 import landRoute from './srcFolder/routes/landingPage';
+import userRoute from './srcFolder/routes/user';
 
 // App is a new express instance
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/api/v1', userRoute);
 app.use('/', landRoute);
 
 

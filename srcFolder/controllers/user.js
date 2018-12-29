@@ -19,7 +19,29 @@ class userControl {
         newUser
       });
   }
+
+  static loginHandler(request, response) {
+    const {
+      email,
+      password
+    } = request.body;
+    const userExist = userModel.find(user => user.email === email);
+
+    if (userExist && (userExist.password === password)) {
+      response.status(201)
+        .json({
+          success: true,
+          message: `Welcome back ${email}!`,
+        });
+    } else {
+      response.status(404)
+        .json({
+          success: false,
+          message: 'email or password does not exist',
+        });
+    }
+  }
 }
 
-const { userHandler } = userControl;
-export default userHandler;
+const { userHandler, loginHandler } = userControl;
+export { userHandler, loginHandler };

@@ -20,10 +20,11 @@ const newUserSchema = Joi.object().keys({
 
 const loginSchema = {
   email: Joi.string().email({ minDomainAtoms: 2 }).lowercase().max(50)
-    .required(),
+    .required()
+    .label('A valid email'),
   password: Joi.string().alphanum().min(3).max(1000)
     .required()
-    .error(new Error('Enter a valid password'))
+    .label('A valid password')
 };
 
 export { newUserSchema, loginSchema };

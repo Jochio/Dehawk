@@ -21,28 +21,12 @@ class userControl {
   }
 
   static loginHandler(request, response) {
-    const {
-      email,
-      password
-    } = request.body;
-    // FILTER will filter out the rest of the objects in the array of
-      // objects and return only the needed
-      // const userExist = userModel.filter(user => user.email === email);
-    // FIND will return only the 'object' that was found
-    const userExist = userModel.find(user => user.email === email);
-    if (userExist && (userExist.password === password)) {
-      response.status(201)
-        .json({
-          success: true,
-          message: `Welcome back ${email}!`,
-        });
-    } else {
-      response.status(404)
-        .json({
-          success: false,
-          message: 'email or password does not exist',
-        });
-    }
+    const { firstName } = request.body;
+    return response.status(201)
+      .json({
+        success: true,
+        message: `Welcome back ${firstName}!`,
+      });
   }
 
   static allUsers(request, response) {

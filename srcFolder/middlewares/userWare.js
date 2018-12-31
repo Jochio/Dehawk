@@ -1,9 +1,9 @@
 import Joi from 'joi';
 import users from '../dummyData/userModel';
-import { newUserSchema } from './inputModel';
+import { newUserSchema, loginSchema } from './inputModel';
 
 class UserValidator {
-  static signupValidator(request, response, next) {
+  static signupHelper(request, response, next) {
     const { email } = request.body;
     const { error } = Joi.validate(request.body, newUserSchema, { abortEarly: false });
     if (error !== null) {
@@ -23,6 +23,30 @@ class UserValidator {
         });
       return false;
     }
+    next();
+  }
+
+  static loginHelper(request, response, next) {
+    const { email, password } = request.body;
+    const { error } = Joi.validate(request.body, loginSchema, { abortEarly: false });
+    if (error !== null) {
+      response.status(400)
+        .json({
+          success: false,
+          message: error.details.map(d => d.message)
+        });
+      return false;
+    }
+    const userExist = users.find(user => user.email === email);
+    if (userExist === undefined || (userExist.password !== password)) {
+      response.status(404)
+        .json({
+          success: false,
+          message: 'email or password does not exist',
+        });
+      return false;
+    }
+    request.body.firstName = userExist.firstName;
     next();
   }
 }
@@ -51,6 +75,6 @@ class UserValidator {
 // }
 
 const {
-  signupValidator
+  signupHelper, loginHelper
 } = UserValidator;
-export default signupValidator;
+export { signupHelper, loginHelper };

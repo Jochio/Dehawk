@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import users from '../dummyData/userModel';
-import { newUserSchema, loginSchema } from './inputModel';
+import { newUserSchema, loginSchema, getUserSchema } from './inputModel';
 
 class UserValidator {
   static signupHelper(request, response, next) {
@@ -49,6 +49,30 @@ class UserValidator {
     request.body.firstName = userExist.firstName;
     next();
   }
+
+  static getUserHelper(request, response, next) {
+    const { id } = request.params;
+    const { error } = Joi.validate(request.params, getUserSchema, { abortEarly: false });
+    if (error !== null) {
+      response.status(400)
+        .json({
+          success: false,
+          message: error.details.map(d => d.message)
+        });
+      return false;
+    }
+    const userExist = users.find(user => user.id === Number(id));
+    if (userExist === undefined) {
+      response.status(404)
+        .json({
+          success: false,
+          message: 'User does not exist',
+        });
+      return false;
+    }
+    request.body = userExist;
+    next();
+  }
 }
 
 //   static getSpecificUserValidator(request, response, next) {
@@ -75,6 +99,6 @@ class UserValidator {
 // }
 
 const {
-  signupHelper, loginHelper
+  signupHelper, loginHelper, getUserHelper
 } = UserValidator;
-export { signupHelper, loginHelper };
+export { signupHelper, loginHelper, getUserHelper };

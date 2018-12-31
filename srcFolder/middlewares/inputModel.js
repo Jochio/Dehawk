@@ -27,4 +27,9 @@ const loginSchema = {
     .label('A valid password')
 };
 
-export { newUserSchema, loginSchema };
+const getUserSchema = {
+  id: Joi.number().integer().required().label('valid Id')
+};
+
+
+export { newUserSchema, loginSchema, getUserSchema };

@@ -40,24 +40,13 @@ class userControl {
   }
 
   static oneUser(request, response) {
-    const { id } = request.params;
-    const userExist = userModel.find(user => user.id === Number(id));
-    // Putting 'Number' ensures what is received from params is an integer, this avoids 'undefined'.
-    console.log(userExist);
-    if (userExist) {
-      response.status(201)
-        .json({
-          success: true,
-          message: 'User found',
-          userExist
-        });
-    } else {
-      response.status(404)
-        .json({
-          success: false,
-          message: 'User not found'
-        });
-    }
+    const details = request.body;
+    return response.status(201)
+      .json({
+        success: true,
+        message: 'User found',
+        details
+      });
   }
 }
 

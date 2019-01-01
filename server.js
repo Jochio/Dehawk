@@ -1,11 +1,15 @@
 import express from 'express';
 // import bodyParser from 'body-parser';
-import landRoute from './dummyFolder/routes/landingPage';
-import userRoute from './dummyFolder/routes/user';
-import orderRoute from './dummyFolder/routes/orders';
+import dotenv from 'dotenv';
+import landRoute from './gatewayRoute';
+import dummyRoutes from './dummyFolder/routes';
+import dbRoutes from './dbFolder/routes';
+
 
 // App is a new express instance
 const app = express();
+dotenv.config();
+const dehawk = process.env.DB_VARIANT === ('pgDB') ? dbRoutes : dummyRoutes;
 
 // This effectively replaces body-parser see https://stackoverflow.com/questions/47232187/express-json-vs-bodyparser-json
 app.use(express.json());
@@ -14,9 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use('/api/v1', orderRoute);
-app.use('/api/v1', userRoute);
+app.use('/api/v1', dehawk);
 app.use('/', landRoute);
 
 

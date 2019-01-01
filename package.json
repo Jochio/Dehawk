@@ -8,6 +8,7 @@
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "joi": "^14.3.1",
     "nodemon": "^1.18.9"

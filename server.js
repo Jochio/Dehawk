@@ -1,8 +1,8 @@
 import express from 'express';
 // import bodyParser from 'body-parser';
-import landRoute from './srcFolder/routes/landingPage';
-import userRoute from './srcFolder/routes/user';
-import orderRoute from './srcFolder/routes/orders';
+import landRoute from './dummyFolder/routes/landingPage';
+import userRoute from './dummyFolder/routes/user';
+import orderRoute from './dummyFolder/routes/orders';
 
 // App is a new express instance
 const app = express();

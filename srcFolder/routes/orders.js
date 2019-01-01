@@ -1,13 +1,16 @@
 import express from 'express';
 import {
-  orderControl, userOrders, update, deleted
+  orderControl, allOrders, oneOrder, userOrders, cancel, deleted
 } from '../controllers/orders';
+import { orderHelper, getOrderHelper, userOrderHelper } from '../middlewares/orderWare';
 
 const orderRoute = express.Router();
 
-orderRoute.post('/placeOrder', orderControl);
-orderRoute.get('/users/:userId/parcels', userOrders);
-orderRoute.put('/parcels/:id/cancel', update);
+orderRoute.post('/placeOrder', orderHelper, orderControl);
+orderRoute.get('/parcels', allOrders);
+orderRoute.get('/parcels/:id', getOrderHelper, oneOrder);
+orderRoute.get('/users/:userId/parcels', userOrderHelper, userOrders);
+orderRoute.put('/parcels/:id/cancel', getOrderHelper, cancel);
 orderRoute.delete('/parcels/:id/delete', deleted);
 
 

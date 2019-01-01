@@ -1,7 +1,6 @@
 // import uuidv5 from 'uuid/v5';
-// import userModel from '../dummyData/userModel';
 import objModel from '../dummyData/objModel';
-import userModel from '../dummyData/userModel';
+// import userModel from '../dummyData/userModel';
 
 class placeOrderHandler {
   static orderControl(request, response) {
@@ -53,44 +52,51 @@ class placeOrderHandler {
       });
   }
 
-
-  static userOrders(request, response) {
-    const { userId } = request.params;
-    let user = userModel.find(users => users.id === Number(userId));
-    if (user) {
-      user = user.email;
-      const list = objModel.filter(orders => orders.email === user);
-      response.status(200)
-        .json({
-          success: true,
-          message: 'Fetched order!',
-          list
-        });
-    } else {
-      response.status(404)
-        .json({
-          success: false,
-          message: 'user order does not exist'
-        });
-    }
+  static allOrders(request, response) {
+    const orders = objModel.reverse();
+    return response.status(201)
+      .json({
+        success: true,
+        message: 'All orders',
+        orders
+      });
   }
 
-  static update(request, response) {
-    const { id } = request.params;
-    const order = objModel.find(orders => orders.id === Number(id));
-    if (order) {
-      order.status = 'In-transit';
+  static oneOrder(request, response) {
+    const details = request.body;
+    return response.status(201)
+      .json({
+        success: true,
+        message: 'Order found',
+        details
+      });
+  }
+
+  static userOrders(request, response) {
+    const list = request.body;
+    return response.status(200)
+      .json({
+        success: true,
+        message: 'Fetched order!',
+        list
+      });
+  }
+
+  static cancel(request, response) {
+    const order = request.body;
+    if (order.status === 'Cancelled' || order.status === 'Delivered') {
+      response.status(400)
+        .json({
+          success: true,
+          message: 'Order cannot be cancelled at this time!',
+        });
+    } else {
+      order.status = 'Cancelled';
       response.status(200)
         .json({
           success: true,
           message: 'Order updated!',
           order
-        });
-    } else {
-      response.status(404)
-        .json({
-          success: false,
-          message: 'order does not exist'
         });
     }
   }
@@ -118,9 +124,9 @@ class placeOrderHandler {
 }
 
 const {
-  orderControl, userOrders, update, deleted
+  orderControl, allOrders, oneOrder, userOrders, cancel, deleted
 } = placeOrderHandler;
 
 export {
-  orderControl, userOrders, update, deleted
+  orderControl, allOrders, oneOrder, userOrders, cancel, deleted
 };

@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import users from '../dummyData/userModel';
-import { newUserSchema, loginSchema, getUserSchema } from './inputModel';
+import { newUserSchema, loginSchema, idSchema } from './inputModel';
 
 class UserValidator {
   static signupHelper(request, response, next) {
@@ -52,7 +52,7 @@ class UserValidator {
 
   static getUserHelper(request, response, next) {
     const { id } = request.params;
-    const { error } = Joi.validate(request.params, getUserSchema, { abortEarly: false });
+    const { error } = Joi.validate(request.params, idSchema, { abortEarly: false });
     if (error !== null) {
       response.status(400)
         .json({

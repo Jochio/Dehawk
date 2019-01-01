@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import pool from './dbConnect';
 
-const createUserTable = `DROP TABLE IF EXISTS userTable, parcelTable CASCADE;
+const createUserTable = `DROP TABLE IF EXISTS userTable CASCADE;
   CREATE TABLE userTable (
     user_id SERIAL PRIMARY KEY,
     firstName VARCHAR (128) NOT NULL,

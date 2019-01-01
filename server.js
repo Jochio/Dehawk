@@ -9,7 +9,7 @@ import dbRoutes from './dbFolder/routes';
 // App is a new express instance
 const app = express();
 dotenv.config();
-const dehawk = process.env.DB_VARIANT === ('pgDB') ? dbRoutes : dummyRoutes;
+const router = process.env.DB_VARIANT === ('pgDB') ? dbRoutes : dummyRoutes;
 
 // This effectively replaces body-parser see https://stackoverflow.com/questions/47232187/express-json-vs-bodyparser-json
 app.use(express.json());
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/api/v1', dehawk);
+app.use('/api/v1', router);
 app.use('/', landRoute);
 
 

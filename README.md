@@ -1,4 +1,4 @@
 # Dehawk
 Learn. Practice.#
 
-Visit app here  https://git.heroku.com/jochio.git
+Visit app here https://jochio.herokuapp.com/

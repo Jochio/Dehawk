@@ -8,6 +8,8 @@ const createUserTable = `DROP TABLE IF EXISTS userTable CASCADE;
     firstName VARCHAR (128) NOT NULL,
     lastName VARCHAR (128) NOT NULL,
     email VARCHAR (355) UNIQUE NOT NULL,
+    address VARCHAR (128) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
     registered TIMESTAMP NOT NULL DEFAULT (NOW()),
     isAdmin BOOLEAN NOT NULL DEFAULT (false),
     password VARCHAR (128) NOT NULL
@@ -35,11 +37,11 @@ const createParcelTable = `DROP TABLE IF EXISTS parcelTable;
     deliveredOn VARCHAR
 )`;
 
-const sql = 'insert into userTable (firstName, lastName, email, isAdmin, password) values ($1, $2, $3, $4, $5)';
+const sql = 'insert into userTable (firstName, lastName, email, address, phone, isAdmin, password) values ($1, $2, $3, $4, $5, $6, $7)';
 
-const variables = ['Admin', 'gritdot', 'gritdot@gmail.com', 'true', hashPassword('admindot')];
+const variables = ['Admin', 'gritdot', 'gritdot@gmail.com', 'Jupiter Road', '098064467788', 'true', hashPassword('admindot')];
 
-const values = ['Bakky', 'jany', 'codegirls@gmail.com', 'false', hashPassword('janedot')];
+const values = ['Bakky', 'jany', 'codegirls@gmail.com', 'Jupiter Road', '098064467788', 'false', hashPassword('janedot')];
 
 
 async function createTables() {

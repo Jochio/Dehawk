@@ -1,8 +1,9 @@
 import express from 'express';
-import sayHi from '../controller/userdb';
+import { signupUser, loginUser } from '../controller/userdb';
 
 const dbRoutes = express.Router();
 // User Routes
-dbRoutes.get('/parcels', sayHi);
+dbRoutes.post('/auth/signup', signupUser);
+dbRoutes.post('/auth/login', loginUser);
 
 export default dbRoutes;

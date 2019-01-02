@@ -14,7 +14,7 @@ landRoute.all('*', (request, response) => {
   response.status(404)
     .json({
       success: false,
-      message: 'Oops! This a wrong route.'
+      message: 'Oops! This page does not exist.'
     });
 });
 

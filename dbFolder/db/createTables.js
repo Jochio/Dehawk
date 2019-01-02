@@ -1,5 +1,6 @@
-import bcrypt from 'bcrypt';
 import pool from './dbConnect';
+import { hashPassword } from '../middleware/authentication';
+
 
 const createUserTable = `DROP TABLE IF EXISTS userTable CASCADE;
   CREATE TABLE userTable (
@@ -35,10 +36,10 @@ const createParcelTable = `DROP TABLE IF EXISTS parcelTable;
 )`;
 
 const sql = 'insert into userTable (firstName, lastName, email, isAdmin, password) values ($1, $2, $3, $4, $5)';
-const password = bcrypt.hashSync('admindot', 10);
-const variables = ['Admin', 'gritdot', 'gritdot@gmail.com', 'true', password];
 
-const values = ['Bakky', 'jany', 'codegirls@gmail.com', 'false', bcrypt.hashSync('janedot', 10)];
+const variables = ['Admin', 'gritdot', 'gritdot@gmail.com', 'true', hashPassword('admindot')];
+
+const values = ['Bakky', 'jany', 'codegirls@gmail.com', 'false', hashPassword('janedot')];
 
 
 async function createTables() {
@@ -60,7 +61,6 @@ async function createTables() {
   } catch (error) {
     console.log('Admin insertion failed');
   }
-
   const user = await pool.query(sql, values);
   try {
     console.log('User inserted', user);

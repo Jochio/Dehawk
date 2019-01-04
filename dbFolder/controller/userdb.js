@@ -42,34 +42,32 @@ class UserHandler {
 
   static loginUser(request, response) {
     const email = [request.body.email];
-    const errors = {};
     pool.query(queryUsersByEmail, email)
       .then(result => {
         if (result.rowCount !== 0) {
           const isPassword = verifyPassword(request.body.password, result.rows[0].password);
           if (isPassword) {
             const user = result.rows[0];
-            const username = email[0].split('@')[0];
             const token = getToken(user);
-            return response.status(200)
+            response.status(200)
               .json({
                 success: true,
-                message: `Welcome back ${username}`,
+                message: `Welcome back ${user.firstName}`,
                 token
               });
+          } else {
+            response.status(400)
+              .json({
+                success: false,
+                message: 'Make sure your password is correct'
+              });
           }
-
-          errors.password = 'Make sure your password is correct';
         }
         if (result.rowCount === 0) {
-          errors.email = 'Email is not found, please enter correct email or signup';
-        }
-        if (JSON.stringify(errors) !== '{}') {
           return response.status(400)
             .json({
               success: false,
-              message: 'Please make sure to input correct values',
-              errors
+              message: 'Email is not found, please enter correct email and password'
             });
         }
       })
